@@ -14,7 +14,7 @@ const messageSchema = new mongoose.Schema(
     },
     message: {
       type: String,
-      required: true,
+      required: [true, "Message field is required"],
     },
   },
   { timestamps: true }
