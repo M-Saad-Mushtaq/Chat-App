@@ -10,7 +10,7 @@ function NoChatSelected() {
     const {authUser} = useAuthContext()
     
     return (
-        <div className='flex items-center justify-center w-full h-full'>
+        <div className='flex items-center justify-center min-w-[500px] h-full'>
             <div className='p-4 text-center sm:text-lg md:text-xl font-semobold flex flex-col items-center gap-2'>
                 <p>
                     Welcome {authUser.fullname}
