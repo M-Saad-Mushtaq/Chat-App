@@ -1,34 +1,34 @@
-import React, { useEffect, useState } from 'react'
-import toast from 'react-hot-toast';
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import useConversation from "../zustand/useConversation.js";
 
 function useGetConversations() {
-  const [loading, setLoading] = React.useState(false)
-  const [conversations, setConversations] = useState([])
+  const { setConversations, conversations } = useConversation();
+  const [loading, setLoading] = useState(false);
 
-  useEffect(()=>{
+  useEffect(() => {
     const getConversations = async () => {
-        setLoading(true)
+      setLoading(true);
 
-        try {
-            const res = await fetch(`/api/users`);
-            const data = await res.json()
+      try {
+        const res = await fetch(`/api/users/friends`);
+        const data = await res.json();
 
-            if (data.error) {
-                throw new Error(data.error);
-                
-            }
-            setConversations(data);
-        } catch (error) {
-            toast.error(error.message)
-        } finally {
-            setLoading(false)
+        if (data.error) {
+          throw new Error(data.error);
         }
-    }
+        setConversations(data);
+      } catch (error) {
+        toast.error(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
 
     getConversations();
-  },[])
+  }, [setConversations]);
 
-  return {loading, conversations}
+  return { loading, conversations };
 }
 
-export default useGetConversations
+export default useGetConversations;

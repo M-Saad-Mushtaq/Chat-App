@@ -6,12 +6,10 @@ export const sendMessage = async (req, res) => {
   try {
     if (!req.body.message || req.body.message.trim() === "") {
       return res.status(204);
-  }
+    }
     const { message } = req.body;
     const { id: receiverId } = req.params;
     const senderId = req.user._id;
-
-    
 
     let conversation = await Conversation.findOne({
       participants: { $all: [senderId, receiverId] },
@@ -37,9 +35,8 @@ export const sendMessage = async (req, res) => {
 
     const receiverSocketId = getReceiverId(receiverId);
     if (receiverSocketId) {
-      io.to(receiverSocketId).emit("newMessage", newMessage)
+      io.to(receiverSocketId).emit("newMessage", newMessage);
     }
-
 
     res.status(201).json(newMessage);
   } catch (error) {
